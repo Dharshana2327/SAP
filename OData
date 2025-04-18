@@ -1,2 +1,3 @@
 OData - Open Data Protocol
 Protocol - Set of rules defined to access the particular data
+SAP is also using Odata Service to tranfer the data to outer world through REST API
