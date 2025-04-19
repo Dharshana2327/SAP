@@ -33,6 +33,7 @@ This XML file does not appear to have any style information associated with it. 
 </app:service>
 #Expand query
 #/sap/opu/odata/SAP/ZHOS_D_SRV/Hospital001Set?$expand=NAV_N&$format=json
+#Here it display the 1st header details following with all ithem details and 2nd header details following with all item details
 {
   "d" : {
     "results" : [
@@ -227,3 +228,13 @@ This XML file does not appear to have any style information associated with it. 
     ]
   }
 }
+#/iwfnd/traces - How much time the particular service taking when we implement our expand query option
+#Once in the traces session add your user name and URI - In this session we will have 2 tab strips.
+#1)Configuration , 2)Performance Trace, 3)Payload Trace
+#1)Configuration - We have User Name, URI, Available log traces we have a)Error log level b)Performance Trace and c)Payload Trace d) HHTP method (Get,Post,Put,Patch,Delete)
+#a)Error log level - Give Full b)Performance Trace - Active (Check box tick) and c)Payload Trace - Active (Check box tick) => In older version Save configuration
+#Go to your Gateway and run the URI /sap/opu/odata/SAP/ZHOS_D_SRV/Hospital001Set?$expand=NAV_N&$format=json
+#Once run, in Performance tab we can see the Status,Service call info,Method, Processing Time in msec, Application Time in msec, Non- Gateway time in msec, Request and resonse size in bytes
+#In Payload trace tab we can see Status, Code(200,400,404,500), Method, Service call info(SAP/ZHOS_D_SRV/Hospital001Set?$expand=NAV_N&$format=json),Dtae,time
+#When we double clock the performance tab it will navigate to one session called Performance summary session - It will give the detailed information of how much time(Average Time) it will take to fetch the data to call the RFC backend system, GW hub system, Apllication, Non GW
+#Detail(Time in millisecond) - gateway framework to overhead the application to face the application data
