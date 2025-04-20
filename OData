@@ -286,7 +286,7 @@ Endloop.
 =>particular header data/$links/naviagtion property name - To give just line item links
 =>$values -particular hrader data/item field/ $value
 #Below query are automatically available in the framework but further action need by development
-=>$orderby
+=>$orderby - /sap/opu/odata/SAP/ZHOS_D_SRV/entityset?$orderby=fieldname asc or desc&anotherfield&$format=json
 =>$top
 =>$skip
 =>$filter
