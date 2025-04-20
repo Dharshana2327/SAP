@@ -272,3 +272,8 @@ Endloop.
 #$expand is the possiblity of Odata to make 'Joins'.
 #Deep insert are the possiblity to make updates on view.
 #Do use expand/deep insert for more data which contains more than one association call.
+#Deep insert we can read the data and update the whole data in one hand using SAP LUW
+#Advantages of Expand:
+=>Expand reduces roundtrips from client to SAP gateway server as well as the SAP gateway server to the SAP business suite. As a result nr=etwork time is reduced.
+=>Expand reduces the SAP gateway server response time and the consumption of the resource.
+=>Expand implementation can reduces the SAP business suite time, because the number of database operation and the application can be reduce.
