@@ -238,3 +238,37 @@ This XML file does not appear to have any style information associated with it. 
 #In Payload trace tab we can see Status, Code(200,400,404,500), Method, Service call info(SAP/ZHOS_D_SRV/Hospital001Set?$expand=NAV_N&$format=json),Dtae,time
 #When we double clock the performance tab it will navigate to one session called Performance summary session - It will give the detailed information of how much time(Average Time) it will take to fetch the data to call the RFC backend system, GW hub system, Apllication, Non GW
 #Detail(Time in millisecond) - gateway framework to overhead the application to face the application data
+#In Performance tab Trace details we can see what methods are been called and how much time it takes to process - We can navigate to our source code from the performance trace session
+#In Payload Trace we can see what data we requested and what did we got in response
+#Instead using framework expand option we can create our own code in DPC extension class - Get expand entity and entity set method
+#If we are using GET EXPAND ENTITY SET method it will trigger first
+# When declaring the header and item data in expand entity -It should be like header data structure and then item data table type
+#Use FOR ALL ENTRIES to fetch the data from header and corresponding line item - Move the data from internal table to expand internal table
+Loop at it_header assigning field-symbol(<ls_header>) .
+Move-corresponing <ls_header> to ls_expand.
+Loop at it_item assigning field-symbol(<ls_item>) where item_fieldname = <ls_header>-fieldname.
+Append <ls_item> To ls_expand-item[].
+Endloop.
+Append ls_expand to lt_expand.
+Endloop.
+#Once we have filled the table we need to send the data to outer format - copy data to ref method
+#While sending the data to outer world we need to use the parameter es_response_context(what data we have to fill) in get expand entityset method 
+#After the copy data ref need to append the item navigation to et_expand_tech_clause - so that item data will be appended to expand clause - so that it doest't call again and again to get expnded item data
+#Advantage is we don't have select statement inside the loop
+#Once you implementes Get_Expand_Entityset , Get_expanded_entity will not work
+#How to get the single entity - By giving the primary key value next to entityset in URI
+#Once we have impelmented get_expand_entity to get paarticular header data with corresponding item data 
+#Expand is used to read multiple entites and entity set in a single service call instead of 2 different call
+#Explicit implementation is not required to use expand query
+#Navigation Vs Expand
+#Navigation returns the navigation target only. Written only line item data
+#Expand is an expansion of original source. Ex: You get the source entity + Requested Expansion inline as one response . Write both header and line item data
+#Deep Insert using Create_deep_entityset method
+#Deep Entity Vs Expand query
+=>Through navigation we traverse from Header to Item 
+#In Expand we are using 2 tables(Header and Item) to display both Header and Item data in a single service call
+#In Deep entity we can create the Header and Item data 
+#Do use $Expand/Deep insert for assosiated enitity types when you need to fetch or create deep data.
+#$expand is the possiblity of Odata to make 'Joins'.
+#Deep insert are the possiblity to make updates on view.
+#Do use expand/deep insert for more data which contains more than one association call.
