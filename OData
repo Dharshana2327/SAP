@@ -277,3 +277,33 @@ Endloop.
 =>Expand reduces roundtrips from client to SAP gateway server as well as the SAP gateway server to the SAP business suite. As a result nr=etwork time is reduced.
 =>Expand reduces the SAP gateway server response time and the consumption of the resource.
 =>Expand implementation can reduces the SAP business suite time, because the number of database operation and the application can be reduce.
+#Query Options
+#Below query are automatically available in the framework but no further action need by development
+=>$expand
+=>?$select=what aare all the field need to fetch
+=>/$count - It will give how many line item are available in the particular service
+=>$format=json or xml
+=>particular header data/$links/naviagtion property name - To give just line item links
+=>$values -particular hrader data/item field/ $value
+#Below query are automatically available in the framework but further action need by development
+=>$orderby
+=>$top
+=>$skip
+=>$filter
+=>$inlinecount
+=>$skiptoken
+#Function Imports
+=>Anything that can not be mapped to the standars CRUD opertions we can do through funcion imports. Ex: In serach help 
+=>Function imports may be used for operations other than CRUD such as approve, reserve, reject, cancel
+=>Ex: Confirm work item, check flight availability,get sales order status, Release/Approve PO/SO.
+#Implement the exection_action method
+#Action name - Whenever we call the particular service from the front end then it will give us one action name=Function import name
+/sap/opu/odata/SAP/ZHOS_D_SRV/function import name
+#Create function import parameter
+/sap/opu/odata/SAP/ZHOS_D_SRV/function import name?parameter name='value'&para2='value2'
+#To send multiple line item choose cardinality as 1:n.
+#Do's and Don'ts
+=>Don't use HTTP method name( such as GET as prefix or suffix
+=>Do use appropriate HTTP method.A GET method must have a return type.Post should have parameters.
+=>If you find yourself inventing function imports such as createx, readx, getx, changex, updatex, deletex. You should make the entity type x part of your model.
+=>Simply CRUD operation should not create the function import.
