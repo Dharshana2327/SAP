@@ -15,6 +15,242 @@
 </app:service>
 #Created Two entity set
 #link: /sap/opu/odata/SAP/ZHOS_D_SRV/?$format=xml
+HOSPITAL001SET_GET_ENTITY
+  METHOD hospital001set_get_entity.
+    DATA: lv_id TYPE zhos_tb_dd-zhos_id.
+    lv_id = it_key_tab[ name = 'ZhosId' ]-value.
+    SELECT  SINGLE * FROM zhos_tb_dd INTO  er_entity WHERE  zhos_id = lv_id." AND zhos_ph = lv_id1.
+    IF sy-subrc <> 0.
+      RAISE EXCEPTION TYPE /iwbep/cx_mgw_busi_exception
+        EXPORTING
+          textid  = /iwbep/cx_mgw_busi_exception=>business_error
+          message = 'Hospital Id is not available in the system'.
+    ENDIF.
+  ENDMETHOD.
+
+HOSPITAL001SET_GET_ENTITYSET
+  METHOD hospital001set_get_entityset.
+    SELECT * FROM zhos_tb_dd INTO CORRESPONDING FIELDS OF TABLE et_entityset .
+  ENDMETHOD.
+
+HOSPITAL001SET_CREATE_ENTITY and HOSPITAL001SET_UPDATE_ENTITY
+  METHOD hospital001set_create_entity.
+    DATA: ls_data TYPE zhos_tb_dd.
+    TRY.
+        CALL METHOD io_data_provider->read_entry_data
+          IMPORTING
+            es_data = er_entity.
+      CATCH /iwbep/cx_mgw_tech_exception.
+    ENDTRY.
+
+    MOVE-CORRESPONDING er_entity TO ls_data.
+    IF sy-subrc <> 0.
+      RAISE EXCEPTION TYPE /iwbep/cx_mgw_busi_exception
+        EXPORTING
+          textid = /iwbep/cx_mgw_busi_exception=>business_error.
+    ELSE.
+       ls_data-mandt = sy-mandt.
+       MODIFY zhos_tb_dd FROM ls_data.
+    ENDIF.
+  ENDMETHOD.
+HOSPITAL001SET_DELETE_ENTITY
+  method HOSPITAL001SET_DELETE_ENTITY.
+
+    DATA(ls_data) = it_key_tab[ name = 'ZhosId' ]-value.
+    DELETE FROM ZHOS_TB_DD WHERE ZHOS_ID = ls_data.
+  endmethod.
+
+ZDOC_DSET_GET_ENTITY
+  METHOD zdoc_dset_get_entity.
+    DATA(lv_id) = it_key_tab[ name = 'ZhosId' ]-value.
+    DATA(lv_id1) = it_key_tab[ name = 'ZdocId' ]-value.
+
+    SELECT SINGLE * FROM zdoc_tb_dd INTO er_entity WHERE zhos_id = lv_id AND zdoc_id = lv_id1.
+    IF  sy-subrc <> 0.
+      RAISE EXCEPTION TYPE /iwbep/cx_mgw_busi_exception
+        EXPORTING
+          textid  = /iwbep/cx_mgw_busi_exception=>business_error
+          message = 'Hospital Id and Doctor Id is not found'.
+    ENDIF.
+  ENDMETHOD.
+
+ZDOC_DSET_GET_ENTITYSET
+  METHOD zdoc_dset_get_entityset.
+    SELECT * FROM zdoc_tb_dd INTO CORRESPONDING FIELDS OF TABLE et_entityset .
+  ENDMETHOD.
+
+ZDOC_DSET_CREATE_ENTITY and ZDOC_DSET_UPDATE_ENTITY
+  METHOD zdoc_dset_create_entity.
+    DATA: ls_data TYPE zdoc_tb_dd.
+    TRY.
+        CALL METHOD io_data_provider->read_entry_data
+          IMPORTING
+            es_data = er_entity.
+      CATCH /iwbep/cx_mgw_tech_exception.
+    ENDTRY.
+    MOVE-CORRESPONDING er_entity TO ls_data.
+    IF sy-subrc <> 0.
+      RAISE EXCEPTION TYPE /iwbep/cx_mgw_busi_exception
+        EXPORTING
+          textid = /iwbep/cx_mgw_busi_exception=>business_error.
+    ELSE.
+      ls_data-mandt = sy-mandt.
+      MODIFY zdoc_tb_dd FROM ls_data.
+    ENDIF.
+
+  ENDMETHOD.
+
+ZDOC_DSET_DELETE_ENTITY
+  METHOD zdoc_dset_delete_entity.
+    DATA(lv_data) = it_key_tab[ name = 'ZhosId' ]-value.
+    DATA(lv_data1) = it_key_tab[ name = 'ZdocId' ]-value.
+    DELETE FROM zdoc_tb_dd WHERE zhos_id = lv_data AND zdoc_id = lv_data1.
+  ENDMETHOD.
+
+/IWBEP/IF_MGW_APPL_SRV_RUNTIME~GET_EXPANDED_ENTITY
+  METHOD /iwbep/if_mgw_appl_srv_runtime~get_expanded_entity.
+    "Deep strcture
+    DATA: BEGIN OF ls_expand.
+            INCLUDE TYPE zcl_zhos_d_mpc_ext=>ts_hospital."hospital structure
+    DATA:   nav_n TYPE zcl_zhos_d_mpc_ext=>tt_zdoc_d. "doctor tabe type
+    DATA:END OF ls_expand.
+
+    "internal table and work area declaration
+    DATA: gs_expand LIKE ls_expand.
+    DATA: gt_expand LIKE STANDARD TABLE OF ls_expand.
+    DATA: gs_header TYPE zcl_zhos_d_mpc_ext=>ts_hospital .
+    DATA: gt_header TYPE zcl_zhos_d_mpc_ext=>tt_hospital.
+    DATA: gs_item TYPE zcl_zhos_d_mpc_ext=>ts_zdoc_d.
+    DATA: gt_item TYPE zcl_zhos_d_mpc_ext=>tt_zdoc_d.
+
+    CONSTANTS: lc_expanded_tech_clauses TYPE string VALUE 'NAV_V'.
+    DATA : wa_key_tab TYPE /iwbep/s_mgw_name_value_pair.
+    DATA : lv_hosid TYPE zhos_id_d.
+
+*    READ TABLE it_key_tab INTO wa_key_tab WITH KEY name = 'ZhosId'.
+    wa_key_tab = it_key_tab[ name = 'ZhosId' ].
+    IF wa_key_tab-value IS NOT INITIAL.
+      lv_hosid = wa_key_tab-value.
+    ENDIF.
+
+*****Logic for particular entityset - selecting a combined data from both header and item********
+*****moving the data to expand work area*******
+    IF iv_entity_set_name = 'Hospital001Set'.
+      SELECT SINGLE * FROM zhos_tb_dd INTO  gs_header WHERE zhos_id = lv_hosid.
+      IF sy-subrc = 0.
+        SELECT * FROM zdoc_tb_dd INTO TABLE gt_item
+          WHERE zhos_id = gs_header-zhos_id.
+      ENDIF.
+
+      MOVE-CORRESPONDING gs_header TO gs_expand.
+
+      LOOP AT gt_item INTO gs_item WHERE zhos_id = gs_expand-zhos_id.
+        APPEND gs_item TO gs_expand-nav_n.
+        CLEAR : gs_item.
+      ENDLOOP.
+      APPEND lc_expanded_tech_clauses TO et_expanded_tech_clauses.  "appending local navproname to entity navproname
+
+      copy_data_to_ref(
+        EXPORTING
+          is_data = gs_expand
+        CHANGING
+          cr_data = er_entity ).
+    ENDIF.
+  ENDMETHOD.
+
+/IWBEP/IF_MGW_APPL_SRV_RUNTIME~GET_EXPANDED_ENTITYSET
+
+  METHOD /iwbep/if_mgw_appl_srv_runtime~get_expanded_entityset.
+    DATA: BEGIN OF ls_expand.
+            INCLUDE TYPE zcl_zhos_d_mpc_ext=>ts_hospital."hospital structure
+    DATA:   nav_n TYPE zcl_zhos_d_mpc_ext=>tt_zdoc_d. "doctor tabe type
+    DATA:END OF ls_expand.
+
+    "internal table and work area declaration
+    DATA: gs_expand LIKE ls_expand.
+    DATA: gt_expand LIKE STANDARD TABLE OF ls_expand.
+    DATA: gs_header TYPE zcl_zhos_d_mpc_ext=>ts_hospital .
+    DATA: gt_header TYPE zcl_zhos_d_mpc_ext=>tt_hospital.
+    DATA: gs_item TYPE zcl_zhos_d_mpc_ext=>ts_zdoc_d.
+    DATA: gt_item TYPE zcl_zhos_d_mpc_ext=>tt_zdoc_d.
+
+    CONSTANTS: lc_expanded_tech_clauses TYPE string VALUE 'NAV_N'.
+
+*****Logic for particular entityset - selecting a combined data from both header and item********
+*****moving the data to expand work area*******
+    IF iv_entity_set_name = 'Hospital001Set'.
+      SELECT * FROM zhos_tb_dd INTO TABLE gt_header.
+      IF gt_header IS NOT INITIAL.
+        SELECT * FROM zdoc_tb_dd INTO TABLE gt_item
+          FOR ALL ENTRIES IN gt_header
+          WHERE zhos_id = gt_header-zhos_id.
+      ENDIF.
+      SORT gt_header.
+      SORT gt_item.
+
+      LOOP AT gt_header INTO gs_header.
+        CLEAR : gs_expand.
+        MOVE-CORRESPONDING gs_header TO gs_expand.
+
+        LOOP AT gt_item INTO gs_item WHERE zhos_id = gs_header-zhos_id.
+          APPEND gs_item TO gs_expand-nav_n.
+          CLEAR : gs_item.
+        ENDLOOP.
+        APPEND gs_expand TO gt_expand.
+      ENDLOOP.
+
+      APPEND lc_expanded_tech_clauses TO et_expanded_tech_clauses.  "appending local navproname to entity navproname
+
+      copy_data_to_ref(
+        EXPORTING
+          is_data = gt_expand
+        CHANGING
+          cr_data = er_entityset ).
+    ENDIF.
+
+  ENDMETHOD.
+
+/IWBEP/IF_MGW_APPL_SRV_RUNTIME~CREATE_DEEP_ENTITY
+
+  METHOD /iwbep/if_mgw_appl_srv_runtime~create_deep_entity.
+
+    DATA: BEGIN OF ls_expand.
+            INCLUDE TYPE zcl_zhos_d_mpc_ext=>ts_hospital."hospital structure
+    DATA:   nav_n TYPE zcl_zhos_d_mpc_ext=>tt_zdoc_d. "doctor tabe type
+    DATA:END OF ls_expand.
+
+    "internal table and work area declaration
+    DATA: gs_expand LIKE ls_expand.
+    DATA: gt_expand LIKE STANDARD TABLE OF ls_expand.
+    DATA: gs_header TYPE zcl_zhos_d_mpc_ext=>ts_hospital .
+    DATA: gt_header TYPE zcl_zhos_d_mpc_ext=>tt_hospital.
+    DATA: gs_item TYPE zcl_zhos_d_mpc_ext=>ts_zdoc_d.
+    DATA: gt_item TYPE zcl_zhos_d_mpc_ext=>tt_zdoc_d.
+
+    TRY.
+        CALL METHOD io_data_provider->read_entry_data
+          IMPORTING
+            es_data = gs_expand.
+
+      CATCH /iwbep/cx_mgw_tech_exception.
+    ENDTRY.
+
+    MOVE-CORRESPONDING gs_expand to gs_header.
+     gt_item[] = gs_expand-nav_n[].
+     MODIFY zhos_tb_dd from gs_header.                               "to modify records
+     try.
+       insert zdoc_tb_dd from table gt_item[].                         "to insert records
+       catch cx_root.
+         endtry.
+
+         copy_data_to_ref(                                             "to equalize two internal tables
+           EXPORTING
+             is_data = gs_expand
+           CHANGING
+             cr_data = er_deep_entity
+         ).
+
+  ENDMETHOD.
 This XML file does not appear to have any style information associated with it. The document tree is shown below.
 <app:service xmlns:app="http://www.w3.org/2007/app" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" xml:lang="en" xml:base="http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/">
 <app:workspace>
@@ -251,7 +487,7 @@ Append <ls_item> To ls_expand-item[].
 Endloop.
 Append ls_expand to lt_expand.
 Endloop.
-#Once we have filled the table we need to send the data to outer format - copy data to ref method
+#Once we have filled the table we need to send the data to outer format - copy data ref to method
 #While sending the data to outer world we need to use the parameter es_response_context(what data we have to fill) in get expand entityset method 
 #After the copy data ref need to append the item navigation to et_expand_tech_clause - so that item data will be appended to expand clause - so that it doest't call again and again to get expnded item data
 #Advantage is we don't have select statement inside the loop
@@ -279,8 +515,8 @@ Endloop.
 =>Expand implementation can reduces the SAP business suite time, because the number of database operation and the application can be reduce.
 #Query Options
 #Below query are automatically available in the framework but no further action need by development
-=>$expand
-=>?$select=what aare all the field need to fetch
+=>$expand - /sap/opu/odata/SAP/ZHOS_D_SRV/Hospital001Set?$expand
+=>?$select = what aare all the field need to fetch
 =>/$count - It will give how many line item are available in the particular service
 =>$format=json or xml
 =>particular header data/$links/naviagtion property name - To give just line item links
