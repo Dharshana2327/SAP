@@ -27,3 +27,27 @@ b)Not only annotation to add information on particular field, but also we can do
 ->Developed by native developer
 ->It's not a part of data dictionary
 ->Supports HANA application
+=>Difference between classical view and CDS view
+Classical View:
+->It doesn't follow the code push
+->No outer join
+->No union
+->No input parameter
+->Not supported
+->No annotaion
+~We have to use SEGW
+~We ahve to use JS
+->SQL fucntion not possible.
+->We can create in  SAP GUI and edit it.
+CDS View:
+->Code push down follow(Whatever we are executing, we can run the complex logic everything in the database level).
+->Outer join possible.
+->union is possible.
+->Input parameter to filter data
+->Nestes View
+->Support annotaion a)odata with annotation b)Easy build FIORI app
+->Support system variable
+->Complex expression
+->Extension
+->SQL function possible.
+->Can't be crated and edited in SAP GUI(Need to install eclipse or SAP HANA studio).
