@@ -270,6 +270,7 @@ This XML file does not appear to have any style information associated with it. 
 #Expand query
 #/sap/opu/odata/SAP/ZHOS_D_SRV/Hospital001Set?$expand=NAV_N&$format=json
 #Here it display the 1st header details following with all ithem details and 2nd header details following with all item details
+
 {
   "d" : {
     "results" : [
@@ -286,71 +287,6 @@ This XML file does not appear to have any style information associated with it. 
         "ZhosGrade" : "A+++",
         "NAV_N" : {
           "results" : [
-            {
-              "__metadata" : {
-                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20272',ZhosId='%20413')",
-                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20272',ZhosId='%20413')",
-                "type" : "ZHOS_D_SRV.ZDOC_D"
-              },
-              "ZdocId" : " 272",
-              "ZhosId" : " 413",
-              "ZdocName" : "SATHISH",
-              "ZdocSpl" : "MD.CARDIO",
-              "ZdocAdd" : "11-A, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
-              "ZdocPh" : "9863346753"
-            },
-            {
-              "__metadata" : {
-                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20DOC',ZhosId='%20HOS')",
-                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20DOC',ZhosId='%20HOS')",
-                "type" : "ZHOS_D_SRV.ZDOC_D"
-              },
-              "ZdocId" : " DOC",
-              "ZhosId" : " HOS",
-              "ZdocName" : "SATHISH",
-              "ZdocSpl" : "MD.CARDIO",
-              "ZdocAdd" : "11-A, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
-              "ZdocPh" : "9863346753"
-            },
-            {
-              "__metadata" : {
-                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20SAT0',ZhosId='%20MOH0')",
-                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20SAT0',ZhosId='%20MOH0')",
-                "type" : "ZHOS_D_SRV.ZDOC_D"
-              },
-              "ZdocId" : " SAT0",
-              "ZhosId" : " MOH0",
-              "ZdocName" : "SATHISH",
-              "ZdocSpl" : "MD.CARDIO",
-              "ZdocAdd" : "11-A, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
-              "ZdocPh" : "9863346753"
-            },
-            {
-              "__metadata" : {
-                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%202720',ZhosId='%204130')",
-                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%202720',ZhosId='%204130')",
-                "type" : "ZHOS_D_SRV.ZDOC_D"
-              },
-              "ZdocId" : " 2720",
-              "ZhosId" : " 4130",
-              "ZdocName" : "SATHISH",
-              "ZdocSpl" : "MD.CARDIO",
-              "ZdocAdd" : "11-A, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
-              "ZdocPh" : "9863346753"
-            },
-            {
-              "__metadata" : {
-                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='SAM00',ZhosId='JAD00')",
-                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='SAM00',ZhosId='JAD00')",
-                "type" : "ZHOS_D_SRV.ZDOC_D"
-              },
-              "ZdocId" : "SAM00",
-              "ZhosId" : "JAD00",
-              "ZdocName" : "SATHISH",
-              "ZdocSpl" : "MD.CARDIO",
-              "ZdocAdd" : "11-A, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
-              "ZdocPh" : "9863346753"
-            },
             {
               "__metadata" : {
                 "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='SAT27',ZhosId='MOH27')",
@@ -380,79 +316,31 @@ This XML file does not appear to have any style information associated with it. 
         "ZhosGrade" : "A+++",
         "NAV_N" : {
           "results" : [
+
+          ]
+        }
+      },
+      {
+        "__metadata" : {
+          "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/Hospital001Set('MOH29')",
+          "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/Hospital001Set('MOH29')",
+          "type" : "ZHOS_D_SRV.Hospital"
+        },
+        "ZhosId" : "MOH29",
+        "ZhosName" : "MEDICITY HOSPITAL",
+        "ZhosAdd" : "11, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
+        "ZhosPh" : "4522521911",
+        "ZhosGrade" : "A+++",
+        "NAV_N" : {
+          "results" : [
             {
               "__metadata" : {
-                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20272',ZhosId='%20413')",
-                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20272',ZhosId='%20413')",
+                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='SAT29',ZhosId='MOH29')",
+                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='SAT29',ZhosId='MOH29')",
                 "type" : "ZHOS_D_SRV.ZDOC_D"
               },
-              "ZdocId" : " 272",
-              "ZhosId" : " 413",
-              "ZdocName" : "SATHISH",
-              "ZdocSpl" : "MD.CARDIO",
-              "ZdocAdd" : "11-A, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
-              "ZdocPh" : "9863346753"
-            },
-            {
-              "__metadata" : {
-                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20DOC',ZhosId='%20HOS')",
-                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20DOC',ZhosId='%20HOS')",
-                "type" : "ZHOS_D_SRV.ZDOC_D"
-              },
-              "ZdocId" : " DOC",
-              "ZhosId" : " HOS",
-              "ZdocName" : "SATHISH",
-              "ZdocSpl" : "MD.CARDIO",
-              "ZdocAdd" : "11-A, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
-              "ZdocPh" : "9863346753"
-            },
-            {
-              "__metadata" : {
-                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20SAT0',ZhosId='%20MOH0')",
-                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%20SAT0',ZhosId='%20MOH0')",
-                "type" : "ZHOS_D_SRV.ZDOC_D"
-              },
-              "ZdocId" : " SAT0",
-              "ZhosId" : " MOH0",
-              "ZdocName" : "SATHISH",
-              "ZdocSpl" : "MD.CARDIO",
-              "ZdocAdd" : "11-A, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
-              "ZdocPh" : "9863346753"
-            },
-            {
-              "__metadata" : {
-                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%202720',ZhosId='%204130')",
-                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='%202720',ZhosId='%204130')",
-                "type" : "ZHOS_D_SRV.ZDOC_D"
-              },
-              "ZdocId" : " 2720",
-              "ZhosId" : " 4130",
-              "ZdocName" : "SATHISH",
-              "ZdocSpl" : "MD.CARDIO",
-              "ZdocAdd" : "11-A, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
-              "ZdocPh" : "9863346753"
-            },
-            {
-              "__metadata" : {
-                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='SAM00',ZhosId='JAD00')",
-                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='SAM00',ZhosId='JAD00')",
-                "type" : "ZHOS_D_SRV.ZDOC_D"
-              },
-              "ZdocId" : "SAM00",
-              "ZhosId" : "JAD00",
-              "ZdocName" : "SATHISH",
-              "ZdocSpl" : "MD.CARDIO",
-              "ZdocAdd" : "11-A, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
-              "ZdocPh" : "9863346753"
-            },
-            {
-              "__metadata" : {
-                "id" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='SAT27',ZhosId='MOH27')",
-                "uri" : "http://ltasrv002.laderatechnology.com:8000/sap/opu/odata/SAP/ZHOS_D_SRV/ZDOC_DSet(ZdocId='SAT27',ZhosId='MOH27')",
-                "type" : "ZHOS_D_SRV.ZDOC_D"
-              },
-              "ZdocId" : "SAT27",
-              "ZhosId" : "MOH27",
+              "ZdocId" : "SAT29",
+              "ZhosId" : "MOH29",
               "ZdocName" : "SATHISH",
               "ZdocSpl" : "MD.CARDIO",
               "ZdocAdd" : "11-A, VINAYAGA NAGAR, OPP. TO DISTRICT COURT, K.K.",
