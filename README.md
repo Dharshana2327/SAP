@@ -13,7 +13,7 @@ a)Data Definition language is the enhancement of sql - Define semantically rich 
 b)Data Control language - Whatever the entity defined using data definition language, we can give the authorization to that particular cds entity using the data query language or data control language
 =>Semantically rich data models - Annotations, Expression, Association.
 a)Not only table having the relationship, If we are using CDS in FIORI application - What will be the description of the fields will be displayed on the FIORI application. What is the F4 help related to the particular field, How we can filter further the particular field - All the information will be embedded in the cds.Simply, we can use the annotation to add the infromation.
-b)Not only annotation to add information on particular field, but also we can do expression if we want any calculation and we can join the table using association(on-demand - cloud).
+b)Not only annotation to add information on particular field, but also we can do expression if we want any calculation and we can join the table using association(on-demand).
 =>There are 2 flavors of CDS - 1)ABAP CDS 2)HANA CDS.
 1)ABAP CDS
 ->ABAP application server
