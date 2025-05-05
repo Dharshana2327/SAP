@@ -4,7 +4,7 @@ In future will upload all the concepts in SAP ABAP
 OData - Open Data Protocol
 Protocol - A set of rules defined to access specific data.
 SAP also uses OData Service to transfer data to external systems through REST APIs.
-CDS - Core Data Service(Set of domain soecific language and services)
+CDS - Core Data Service(Set of domain specific language and services)
 =>Sap hana supports sql to define mainupulate and consume the data from the database - On top we have odata, bobf, business intelligent edm, etc use to create the higher level data models on its own.
 => We are having different technologies to maintain data models , so to overcome and maintain in common technologies we are going with CDS.
 =>Set of domain specific languages and services, called CDS, for defining and consuming semantically rich data models.
@@ -44,10 +44,16 @@ CDS View:
 ->Outer join possible.
 ->union is possible.
 ->Input parameter to filter data
-->Nestes View
+->Nested View
 ->Support annotaion a)odata with annotation b)Easy build FIORI app
 ->Support system variable
 ->Complex expression
 ->Extension
 ->SQL function possible.
 ->Can't be crated and edited in SAP GUI(Need to install eclipse or SAP HANA studio).
+CDS CREATION
+-> CDS can be created by either EDT(Eclipse Developmet Toll) or in HANA studio, Wd can't use SAP GUI for cration or modification of cds.
+->Whenever we are created CDS there is 3 part - 1)DDL Editor 2)DDL source 3)ABAP Dictionary
+->DDLS(Data Definition Language Source) object activated then - > SQL View + CDS entity (HANA View in DB) - we can transport the DDLS to another system - Why because DDL source name will be captured by TR. DDLS is responsible for checking the syntax and activating the code.
+STEPS:
+->Go to eclipse - package - Other ABAP repository object - search data definition - Give DDL source name - next - assign the TR
