@@ -59,7 +59,7 @@ STEPS:
 ->Go to eclipse - package - Other ABAP repository object - search data definition - Give DDL source name - next - assign the TR - Finish ( It will ask to use any template)
 -> Write a program - Define view <cds view name>
 ->If we are using template
-@AbapCatalog.sqlViewName: 'zcds_view'
+@AbapCatalog.sqlViewName: 'zcds_view' "mandatory annotation
 @AbapCatalog.compiler.compareFilter: true
 @AbapCatalog.preserveKey: true
 @AccessControl.authorizationCheck: #NOT_REQUIRED
@@ -73,6 +73,25 @@ define view zcds_dm as select from data_source_name
     ekorg as EKORG,
     ekgrp as EKGRP
 }
+ZCDS_DM - cds entity name ,  zcds_view - sql name
 alt+F8 - To open Transaction code 
--> Once activated the cds view, we can able to view it in SE11
+->Once activated the cds view, we can able to view it in SE11, we can't rename the sql name as well as cds view name. If want to rename we have to delete the ddls and create new ddls
 ->check this zcds_view in database table , check this zcds_dm in view
+-> To command the line on cds /* */ and ctrl+shift+< and use --
+->keyward can be lower case, Upper case and camel case
+->To get output press F8
+->click sql console - it will give from which we are getting the data - ZCDS_DM (cds entity) name is used to get the data
+->When we right click and click show SQL CREATE statement - It is used to find what query will be executedat the database level to create the database view
+->Annotation - Extra information to CDS
+->2 Kind of annotaion - 1)ABAP specific annotation - evaluated by runtime environmanet 2) Framework specific annotation - evaluated by the framework
+->@EndUserText.label: 'Data Definition' - basic annotaion - endusertext.label - to give some meaningful text infromation or descriptions
+->@AbapCatalog.preserveKey: true - whenever we are using the preserve key = true - whatever we have defined in the cds key fields should be the key fields
+->Even we didn't the key word and preserve key - key field will automatically created in sql view by fetching the key field from the source table the key field will be assigned here my source table is ekko. If we don't want the key field from source table we can go with the preservekey annotation
+->buffering - whenever we create classical view from our ddic based table , in cds view we can use the below annotation
+@AbapCatalog.buffering: {
+    status: #SWITCHED_OFF,
+    type: #NONE,
+    numberOfKeyFields: 000
+}
+-> Three type of status in buffering 1)Active 2)Not allowed 3)Switched off
+-> Type of buffering - single record buffering , generic buffering , full record buffering , none
