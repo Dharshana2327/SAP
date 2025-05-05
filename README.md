@@ -56,4 +56,23 @@ CDS CREATION
 ->Whenever we are created CDS there is 3 part - 1)DDL Editor 2)DDL source 3)ABAP Dictionary
 ->DDLS(Data Definition Language Source) object activated then - > SQL View + CDS entity (HANA View in DB) - we can transport the DDLS to another system - Why because DDL source name will be captured by TR. DDLS is responsible for checking the syntax and activating the code.
 STEPS:
-->Go to eclipse - package - Other ABAP repository object - search data definition - Give DDL source name - next - assign the TR
+->Go to eclipse - package - Other ABAP repository object - search data definition - Give DDL source name - next - assign the TR - Finish ( It will ask to use any template)
+-> Write a program - Define view <cds view name>
+->If we are using template
+@AbapCatalog.sqlViewName: 'zcds_view'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Data Definition'
+@Metadata.ignorePropagatedAnnotations: true
+define view zcds_dm as select from data_source_name
+{
+    key ebeln as EBELN,
+    bukrs as BUKRS,
+    lifnr as ELIFN,
+    ekorg as EKORG,
+    ekgrp as EKGRP
+}
+alt+F8 - To open Transaction code 
+-> Once activated the cds view, we can able to view it in SE11
+->check this zcds_view in database table , check this zcds_dm in view
