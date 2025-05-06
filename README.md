@@ -87,7 +87,7 @@ alt+F8 - To open Transaction code
 ->@EndUserText.label: 'Data Definition' - basic annotaion - endusertext.label - to give some meaningful text infromation or descriptions
 ->@AbapCatalog.preserveKey: true - whenever we are using the preserve key = true - whatever we have defined in the cds key fields should be the key fields
 ->Even we didn't the key word and preserve key - key field will automatically created in sql view by fetching the key field from the source table the key field will be assigned here my source table is ekko. If we don't want the key field from source table we can go with the preservekey annotation
-->buffering - whenever we create classical view from our ddic based table , in cds view we can use the below annotation
+->buffering annotation - whenever we create classical view from our ddic based table , in cds view we can use the below annotation
 @AbapCatalog.buffering: {
     status: #SWITCHED_OFF,
     type: #NONE,
@@ -95,3 +95,17 @@ alt+F8 - To open Transaction code
 }
 -> Three type of status in buffering 1)Active 2)Not allowed 3)Switched off
 -> Type of buffering - single record buffering , generic buffering , full record buffering , none
+-> numberOfKeyFields: 000 - Till which key fields we want to buffer. Key fields should not have null values
+->Whenever we are doing buffering it can't contain any another cds view/db view or table function
+->Cds view can be created using parameters those also not be buffered
+->Database Hint annotation - CDS are not specific to HANA database, CDS can be created in any database
+@AbapCatalog.dbHints: [{
+
+    dbSystem: #ADA, "which database we are going to be work with
+    hint: ''
+}]
+->Wheneever we execute any select statement and should take the secondary index and get the data faster but it was not possible in cds view , so we are having dbhint to use the particular key. It is not used in HANA but if we are using oracle or some other database we can use this dbhint
+->ViewEnhancement Category: [ we can pass multiple values with comma separator]
+->Whenever the sap develop the standard cds they give us option to extend the cds view - so we can create extended cds view along with our basic cds view.
+->viewEnhancementCategory: [], 1)Group_by(Along with projection list we can use group by also, suppose cds view conatin aggregated functions like max,min.) 2)None(can't extend the particular cds view) 3)Projection_list(Whatever the select list we are using the number of field with additional fields can be used. If enhancement category is projection list then we can't enhance the particular cds view so we should have groupby along with projection list. So that we can add non-aggregated, aggregated fields) 4)Union(If union is not specified, then we can't enhance/extend the particular cds view those contain union having particular value and it used along with projection list)
+->Compiler - comparefilter : true - When we create the association, based on one condition we are using the multiple condition and we can use cds view inside another cds view there also we have defined the same conditions. If we put the unnecessary condtions multiple time unknowingly that time we have to put comparefilter:ture   
