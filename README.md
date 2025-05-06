@@ -223,3 +223,26 @@ algorithm :
 ->Automated - Whenever we use own condition automatically it will add the client in the own condition to compare the clients.It make cross join with T000 table having all the client
 ->None - Client independent 
 ->Session_variables - suppose we have 2 tables, one is client dependent and the other one is client independent it is difficult to add the own condtion, It will use the T000 table and automatically add the where condition in client dependent.So that it is preferrable to use session variable and also it is faster than automated. If we are getting the data from the normal table, if both are client dependent then there is no issue. 
+->CDS View Entities Vs DDIC based View
+**CDS VIEW ENTITIES:**
+->7.55(In old version you don't get option to create)
+->Define View Entity
+->No additional DDIC based view created
+->Improved performance during view activation
+->Optimization and simplification of syntax
+->@AbapCatalog.sqlViewName: '' annotaion is not available
+->Name list are not supported
+->Below annotation not required:
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+->Client handling takes place implicitly and doesn't require any development effort.
+->Buffering annotation not supported.
+**DDIC BASED CDS VIEW(absolute):**
+->Whenever we try to access the cds view using DDIC we have 3 objects. 1) DDIC short name 2)CDS Entity 3)SQL View. bUt we never used the DDIC short name and Sql view anywhere. wherever we are using cds view We are using CDS entity. In select statement we have to use cds entity name or we are calling one cds in another also we are using cds entity.
+->For the nameshake only are using sql name to display the view in se11, there is no use because we can't edit the entries.
+->7.40 , SP05.
+->DEFINE VIEW
+->CDS Managed DDIC view created
+->These are still supported to ensure downward compatibility.
+->Define View is absolute - Reason: 
+->Instead of Define View we are going wit Define View Entity
