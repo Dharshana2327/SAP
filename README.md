@@ -86,12 +86,45 @@ alt+F8 - To open Transaction code
 ->2 Kind of annotaion - 1)ABAP specific annotation - evaluated by runtime environmanet 2) Framework specific annotation - evaluated by the framework
 ->@EndUserText.label: 'Data Definition' - basic annotaion - endusertext.label - to give some meaningful text infromation or descriptions
 ->@AbapCatalog.preserveKey: true - whenever we are using the preserve key = true - whatever we have defined in the cds key fields should be the key fields
-->Even we didn't the key word and preserve key - key field will automatically created in sql view by fetching the key field from the source table the key field will be assigned here my source table is ekko. If we don't want the key field from source table we can go with the preservekey annotation
+->Even we didn't the key word and preserve key - key field will automatically created in sql view by fetching the key field from the source table. The key field will be assigned here my source table is ekko. If we don't want the key field from source table we can go with the preservekey annotation
 ->buffering annotation - whenever we create classical view from our ddic based table , in cds view we can use the below annotation
 @AbapCatalog.buffering: {
     status: #SWITCHED_OFF,
     type: #NONE,
     numberOfKeyFields: 000
+}
+@AbapCatalog: {
+    buffering: {
+        status: #SWITCHED_OFF,
+        type: #NONE,
+        numberOfKeyFields: 000
+    },
+    dbHints: [{
+        dbSystem: ,
+        hint: ''
+    }],
+    viewEnhancementCategory: [  ],
+    extensibility: {
+        extensible: true,
+        elementSuffix: '',
+        quota: {
+            maximumFields: ,
+            maximumBytes: 
+        },
+        dataSources: [ '' ],
+        allowNewDatasources: true,
+        allowNewCompositions: true
+    },
+    sqlViewName: '',
+    preserveKey: true,
+    compiler: {
+        compareFilter: true
+    },
+    dataMaintenance: #RESTRICTED,
+    entityBuffer: {
+        definitionAllowed: true,
+        propagationAllowed: true
+    }
 }
 -> Three type of status in buffering 1)Active 2)Not allowed 3)Switched off
 -> Type of buffering - single record buffering , generic buffering , full record buffering , none
@@ -104,7 +137,7 @@ alt+F8 - To open Transaction code
     dbSystem: #ADA, "which database we are going to be work with
     hint: ''
 }]
-->Wheneever we execute any select statement and should take the secondary index and get the data faster but it was not possible in cds view , so we are having dbhint to use the particular key. It is not used in HANA but if we are using oracle or some other database we can use this dbhint
+->Whenever we execute any select statement and should take the secondary index and get the data faster but it was not possible in cds view , so we are having dbhint to use the particular key. It is not used in HANA but if we are using oracle or some other database we can use this dbhint
 ->ViewEnhancement Category: [ we can pass multiple values with comma separator]
 ->Whenever the sap develop the standard cds they give us option to extend the cds view - so we can create extended cds view along with our basic cds view.
 ->viewEnhancementCategory: [], 1)Group_by(Along with projection list we can use group by also, suppose cds view conatin aggregated functions like max,min.) 2)None(can't extend the particular cds view) 3)Projection_list(Whatever the select list we are using the number of field with additional fields can be used. If enhancement category is projection list then we can't enhance the particular cds view so we should have groupby along with projection list. So that we can add non-aggregated, aggregated fields) 4)Union(If union is not specified, then we can't enhance/extend the particular cds view those contain union having particular value and it used along with projection list)
@@ -145,3 +178,48 @@ define view Zcds_Dm as select from data_source_name
 {
     
 }
+->Data maintenace annotation - similar to se11 1)Allowed(Not used in cds view) 2)Display only 3)Not allowed 4)Restricted
+@AccessControl: {
+    authorizationCheck: #NOT_REQUIRED,
+    auditFilter: ,
+    privilegedAssociations: [ '' ],
+    auditing: {
+        type: ,
+        specification: ''
+    },
+    personalData: {
+        blocking: ,
+        blockingIndicator: [ '' ]
+    },
+    readAccess: {
+        logging: {
+            logdomain: [{
+                area: '',
+                domain: ''
+            }],
+            output: 
+        }
+    }
+}
+@AccessControl.authorizationCheck: #CHECK ,#Not_allowed, #Not_Required, #Previlieged_only
+->Authority check - It will check particular cds can be access or not - we have dcl(Data control Language)
+->To define DCL - right click data definition language - choose New access control(Who can access the particular cds)
+->If we are defined in dcl and we are accessing particular cds in our select query that time it will check implicitly , if we have access to get the data or not from the cds based on that it will written the sy-subrc.
+->If we didn't create the dcl, or created but didn't specify the role - syntax warning will come. In that case we can use @AccessControl.authorizationCheck: #Not_required (It will give the waring message work like check, if we didn't create the dcl).
+->Second thing it will check whether it will written the @AccessControl.authorizationCheck: #CHECK over here.
+->It will display if we have written the check over here
+@AccessControl.authorizationCheck: #Not_allowed
+->Even we defined the dcl or not, it doesn't matter. Because there will be no authority check performed whenever we access the particular cds view.
+@AccessControl.authorizationCheck: #Previlieged_only
+->It is defined by the SADL framework - it will check whether we have access for the particular cds view or not
+@ClientHandling: {
+type :
+algorithm :
+}
+->Client Handling Annotation - 1)Type 2)Algorithm
+1)Type - client dependent (atleast one table should be client dependent.one of the table in client dependent then the table will automatically become client dependent) and client independent all table should be client independent), Inherited(Derived from source table).
+2)Algoritm(Once we deined the client dependent, how it should be handle when we use multiple table) - #Automated, #NONE, #Session_variable
+->Automated and session_variable can be used along with inhertited or client dependent
+->Automated - Whenever we use own condition automatically it will add the client in the own condition to compare the clients.It make cross join with T000 table having all the client
+->None - Client independent 
+->Session_variables - suppose we have 2 tables, one is client dependent and the other one is client independent it is difficult to add the own condtion, It will use the T000 table and automatically add the where condition in client dependent.So that it is preferrable to use session variable and also it is faster than automated. If we are getting the data from the normal table, if both are client dependent then there is no issue. 
