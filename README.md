@@ -108,4 +108,40 @@ alt+F8 - To open Transaction code
 ->ViewEnhancement Category: [ we can pass multiple values with comma separator]
 ->Whenever the sap develop the standard cds they give us option to extend the cds view - so we can create extended cds view along with our basic cds view.
 ->viewEnhancementCategory: [], 1)Group_by(Along with projection list we can use group by also, suppose cds view conatin aggregated functions like max,min.) 2)None(can't extend the particular cds view) 3)Projection_list(Whatever the select list we are using the number of field with additional fields can be used. If enhancement category is projection list then we can't enhance the particular cds view so we should have groupby along with projection list. So that we can add non-aggregated, aggregated fields) 4)Union(If union is not specified, then we can't enhance/extend the particular cds view those contain union having particular value and it used along with projection list)
-->Compiler - comparefilter : true - When we create the association, based on one condition we are using the multiple condition and we can use cds view inside another cds view there also we have defined the same conditions. If we put the unnecessary condtions multiple time unknowingly that time we have to put comparefilter:ture   
+->Compiler - comparefilter : true - When we create the association, based on one condition we are using the multiple condition and we can use cds view inside another cds view there also we have defined the same conditions. If we put the unnecessary condtions multiple time unknowingly that time we have to put comparefilter:ture  
+->DEFINEVIEW ENTITY
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Data Definition'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity Zcds_Dm as select from data_source_name
+{
+    
+}
+->DEFINEVIEW ENTITY WITH TO PARENT ASSOCIATION
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Data Definition'
+@Metadata.ignorePropagatedAnnotations: true
+define view entity Zcds_Dm as select from data_source_name
+association to parent target_data_source_name as _association_name
+    on $projection.element_name = _association_name.target_element_name
+{
+    
+    _association_name // Make association public
+}
+->DEFINE VIEW
+@AbapCatalog.sqlViewName: ''
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Data Definition'
+@Metadata.ignorePropagatedAnnotations: true
+define view Zcds_Dm as select from data_source_name
+{
+    
+}
