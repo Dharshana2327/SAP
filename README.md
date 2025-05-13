@@ -246,3 +246,58 @@ algorithm :
 ->These are still supported to ensure downward compatibility.
 ->Define View is absolute - Reason: 
 ->Instead of Define View we are going wit Define View Entity
+@Metadata.ignorePropagatedAnnotations: true
+->When we activate it,this DDL shows that the all annotations will be stored in one system table.
+->System table will use to evaluate the particular annotaions. CL_DD_DDL_ANNOTATION_SERVICE is the class to analyze 
+->It divided into three parts
+1)Meta data annotation
+2)Direct annotation(Get_direct_annos_)
+3)Indirect annotation(Derived - data element , domain and inheritate - cds inside cds)
+->@Metadata.ignorePropagatedAnnotations: true - This annotation will not consider the inherited annotation
+->@Metadata.ignorePropagatedAnnotations: false - What are all the annotation are there in another cds. When this class will evaluate all annotations.
+@ObjectModel.usageType: {
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+->This annotation defines how much data volumes can candle our cds and what kind of data is available in particular cds and what is the performance expectation of the cds and what need to be done when particular cds, if we want to improve the cds performance.
+->Data class annotation : 1)Customizing - , 2)Master - Rarely changed, 3)Meta - Technical attribute, 4)Mixed - If our cds has 2,3 tables having transactoinal and master data and transactional data, 5)Organizational - Organizational structure data, 6)Transactional - Change frequently.
+->When we crating the table we declared the data calss to know what kind of data in this cds content .
+->Based on data class cds will perform optimally when it will be called in any application.
+->Size category - How much volume of our cds contain. L - Large, M - Medium, S - Small, XL , XXL.
+->Small starts with 1000.
+->Service Quality - A, B, C, D, P, X. By default X.
+Service Quality: A
+->The CDS view can be used for high volume transaction or for background transaction.
+->Maximum number of DDIC database table 3.
+->Must not call any function.
+->Must not aggregate a large number of table rows for direct access.
+->Must not access DDIC databse table with mixed data category.
+->If the underlying tables are buffered, the CDS view entity should be buffered too.
+->The runtike for reading a single line with a fully specified key must be less than 1ms for selecting fileds form a field list or 2ms for selecting a all fields with.
+Service Quality: B
+->The CDS view entity can be used for transaction or for background transaction.
+->Maximum number of of DDIC database table 5.
+->Must not call any function.
+->Must not aggregate the large number of table rows for direct access.
+->Must not access DDIC database table with mixed data categories.
+->If the underlying tables are buffered, the CDS view entity should be buffered too.
+->The runtime for reading a single line with a fully specified key must be less than 2ms for selecting fields from a field list or 5ms for selecting all fields with.
+Service Quality: C
+->The CDS view entity can be used to query individual objects in transaction.
+->Maximum number of of DDIC database table 15.
+->Must not aggregate the large number of table rows for direct access.
+->Must not access DDIC database table with mixed data categories.
+->If the underlying tables are buffered, the CDS view entity should be buffered too.
+->The runtime for reading a single line with a fully specified key must be less than 10ms for selecting fields from a field list or 20ms for selecting all fields with.
+Service Quality: D
+->The CDS view entity can be used to for analytical queries.
+->Maximum number of of DDIC database table 100.
+->The performance should be checked and monitored with realistic data by a test framework.
+Service Quality: X
+->The CDS view entity is desinged for special application cases, such as data migration.
+->Maximum number of of DDIC database table more than 100.
+Service Quality: P
+->The CDS view entity is used to structure hierarchies of CDS entities and must not be used outside of such.
+->A CDS view entity with a quality category P is not intended for usage in business application.
+->Performance check by a test framework are required.
