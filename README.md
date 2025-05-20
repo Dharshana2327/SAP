@@ -301,3 +301,9 @@ Service Quality: P
 ->The CDS view entity is used to structure hierarchies of CDS entities and must not be used outside of such.
 ->A CDS view entity with a quality category P is not intended for usage in business application.
 ->Performance check by a test framework are required.
+@VDM.viewType: #BASIC 
+@VDM.viewType: #COMPOSITE
+@VDM.viewType: #CONSUMPTION
+@VDM.viewType: #DERIVATION_FUNCTION
+@VDM.viewType: #EXTENSION
+@VDM.viewType: #TRANSACTIONAL
